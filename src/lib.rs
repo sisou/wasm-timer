@@ -27,4 +27,6 @@ pub use wasm::*;
 
 mod timer;
 #[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
+mod js;
+#[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
 mod wasm;

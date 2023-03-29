@@ -9,6 +9,7 @@ use std::time::Duration;
 use wasm_bindgen::{JsCast, closure::Closure};
 
 use crate::{Instant, Timer, TimerHandle};
+use crate::js::set_timeout;
 
 /// Starts a background task, creates a `Timer`, and returns a handle to it.
 ///
@@ -25,8 +26,7 @@ pub(crate) fn run() -> TimerHandle {
 /// Calls `Window::setTimeout` with the given `Duration`. The callback wakes up the timer and
 /// processes everything.
 fn schedule_callback(timer: Arc<Mutex<Timer>>, when: Duration) {
-    let window = web_sys::window().expect("Unable to access Window");
-    let _ = window.set_timeout_with_callback_and_timeout_and_arguments_0(
+    let _ = set_timeout(
         &Closure::once_into_js(move || {
             let mut timer_lock = timer.lock();
 
